@@ -14,7 +14,7 @@ void BasicNode::setTypes(Types t) {
 
 TreeNode::TreeNode(TreeNode* parent, NodeTypes type) {
 	this->parent = parent;
-	this->type = type;
+	this->nodeType = type;
 }
 
 TreeNode::TreeNode() {

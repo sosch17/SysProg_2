@@ -26,6 +26,7 @@ public:
 	// für TypeCheck
 	Types getTypes();
 	void setTypes(Types t);
+
 private:
 	Types type;
 };

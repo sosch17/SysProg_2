@@ -668,130 +668,145 @@ Automat::Automat() {
 
 		//Übergänge ElseGroßState1
 		for (int i = 'A'; i <= 'K'; i++) {
-														stateMatrix[StateTypes::elseGrossState1][i] =
-																StateTypes::identifierState;
-											}
+			stateMatrix[StateTypes::elseGrossState1][i] = StateTypes::identifierState;
+		}
+
 		stateMatrix[StateTypes::elseGrossState1]['L'] = StateTypes::elseGrossState2;
 
 		for (int i = 'M'; i <= 'Z'; i++) {
-																stateMatrix[StateTypes::elseGrossState1][i] =
-																		StateTypes::identifierState;
-													}
+			stateMatrix[StateTypes::elseGrossState1][i] = StateTypes::identifierState;
+		}
 
 		for (int i = '0'; i <= '9'; i++) {
-																stateMatrix[StateTypes::elseGrossState1][i] =
-																		StateTypes::identifierState;
-													}
+			stateMatrix[StateTypes::elseGrossState1][i] = StateTypes::identifierState;
+		}
+
+		for (int i = 'a'; i <= 'z'; i++) {
+			stateMatrix[StateTypes::elseGrossState1][i] = StateTypes::identifierState;
+		}
 
 		//Übergänge ElseGroßState2
 
 		for (int i = 'A'; i <= 'R'; i++) {
-																stateMatrix[StateTypes::elseGrossState2][i] =
-																		StateTypes::identifierState;
-													}
-				stateMatrix[StateTypes::elseGrossState2]['S'] = StateTypes::elseGrossState3;
+			stateMatrix[StateTypes::elseGrossState2][i] = StateTypes::identifierState;
+		}
 
-				for (int i = 'T'; i <= 'Z'; i++) {
-																		stateMatrix[StateTypes::elseGrossState2][i] =
-																				StateTypes::identifierState;
-															}
+		stateMatrix[StateTypes::elseGrossState2]['S'] = StateTypes::elseGrossState3;
 
-				for (int i = '0'; i <= '9'; i++) {
-																		stateMatrix[StateTypes::elseGrossState2][i] =
-																				StateTypes::identifierState;
-															}
+		for (int i = 'T'; i <= 'Z'; i++) {
+			stateMatrix[StateTypes::elseGrossState2][i] = StateTypes::identifierState;
+		}
+
+		for (int i = '0'; i <= '9'; i++) {
+			stateMatrix[StateTypes::elseGrossState2][i] = StateTypes::identifierState;
+		}
+
+		for (int i = 'a'; i <= 'z'; i++) {
+			stateMatrix[StateTypes::elseGrossState2][i] = StateTypes::identifierState;
+		}
 
 		//Übergänge ElseGroßState3
 
 		for (int i = 'A'; i <= 'D'; i++) {
-																		stateMatrix[StateTypes::elseGrossState3][i] =
-																				StateTypes::identifierState;
-															}
-						stateMatrix[StateTypes::elseGrossState3]['E'] = StateTypes::elseKleinState4;
+			stateMatrix[StateTypes::elseGrossState3][i] = StateTypes::identifierState;
+		}
 
-						for (int i = 'F'; i <= 'Z'; i++) {
-																				stateMatrix[StateTypes::elseGrossState3][i] =
-																						StateTypes::identifierState;
-																	}
+		stateMatrix[StateTypes::elseGrossState3]['E'] = StateTypes::elseKleinState4;
 
-						for (int i = '0'; i <= '9'; i++) {
-																				stateMatrix[StateTypes::elseGrossState3][i] =
-																						StateTypes::identifierState;
-																	}
+		for (int i = 'F'; i <= 'Z'; i++) {
+			stateMatrix[StateTypes::elseGrossState3][i] = StateTypes::identifierState;
+		}
+
+		for (int i = '0'; i <= '9'; i++) {
+			stateMatrix[StateTypes::elseGrossState3][i] = StateTypes::identifierState;
+		}
+
+		for (int i = 'a'; i <= 'z'; i++) {
+			stateMatrix[StateTypes::elseGrossState3][i] = StateTypes::identifierState;
+		}
 
 		//Übergänge ElseGroßState 4
 
-						for (int i = 'A'; i <= 'Z'; i++) {
-																				stateMatrix[StateTypes::elseGrossState4][i] =
-																						StateTypes::identifierState;
-																	}
-						for (int i = '0'; i <= '9'; i++) {
-																						stateMatrix[StateTypes::elseGrossState4][i] =
-																								StateTypes::identifierState;
-																			}
-						//Übergänge ElseKleinState1
-								for (int i = 'a'; i <= 'k'; i++) {
-																				stateMatrix[StateTypes::elseKleinState1][i] =
-																						StateTypes::identifierState;
-																	}
-								stateMatrix[StateTypes::elseKleinState1]['l'] = StateTypes::elseKleinState2;
+		for (int i = 'A'; i <= 'Z'; i++) {
+			stateMatrix[StateTypes::elseGrossState4][i] = StateTypes::identifierState;
+		}
+		for (int i = '0'; i <= '9'; i++) {
+			stateMatrix[StateTypes::elseGrossState4][i] = StateTypes::identifierState;
+		}
+		for (int i = 'a'; i <= 'z'; i++) {
+			stateMatrix[StateTypes::elseGrossState4][i] = StateTypes::identifierState;
+		}
 
-								for (int i = 'm'; i <= 'z'; i++) {
-																						stateMatrix[StateTypes::elseKleinState1][i] =
-																								StateTypes::identifierState;
-																			}
+		//Übergänge ElseKleinState1
+		for (int i = 'a'; i <= 'k'; i++) {
+			stateMatrix[StateTypes::elseKleinState1][i] = StateTypes::identifierState;
+		}
 
-								for (int i = '0'; i <= '9'; i++) {
-																						stateMatrix[StateTypes::elseKleinState1][i] =
-																								StateTypes::identifierState;
-																			}
+		stateMatrix[StateTypes::elseKleinState1]['l'] = StateTypes::elseKleinState2;
 
-								//Übergänge ElseKleinState2
+		for (int i = 'm'; i <= 'z'; i++) {
+			stateMatrix[StateTypes::elseKleinState1][i] = StateTypes::identifierState;
+		}
 
-								for (int i = 'a'; i <= 'r'; i++) {
-																						stateMatrix[StateTypes::elseKleinState2][i] =
-																								StateTypes::identifierState;
-																			}
-										stateMatrix[StateTypes::elseKleinState2]['s'] = StateTypes::elseKleinState3;
+		for (int i = '0'; i <= '9'; i++) {
+			stateMatrix[StateTypes::elseKleinState1][i] = StateTypes::identifierState;
+		}
 
-										for (int i = 't'; i <= 'z'; i++) {
-																								stateMatrix[StateTypes::elseKleinState2][i] =
-																										StateTypes::identifierState;
-																					}
+		for (int i = 'A'; i <= 'Z'; i++) {
+			stateMatrix[StateTypes::elseKleinState1][i] = StateTypes::identifierState;
+		}
 
-										for (int i = '0'; i <= '9'; i++) {
-																								stateMatrix[StateTypes::elseKleinState2][i] =
-																										StateTypes::identifierState;
-																					}
+		//Übergänge ElseKleinState2
 
-								//Übergänge ElseGroßState3
+		for (int i = 'a'; i <= 'r'; i++) {
+			stateMatrix[StateTypes::elseKleinState2][i] = StateTypes::identifierState;
+		}
 
-								for (int i = 'a'; i <= 'd'; i++) {
-																								stateMatrix[StateTypes::elseKleinState3][i] =
-																										StateTypes::identifierState;
-																					}
-												stateMatrix[StateTypes::elseKleinState3]['e'] = StateTypes::elseKleinState4;
+		stateMatrix[StateTypes::elseKleinState2]['s'] = StateTypes::elseKleinState3;
 
-												for (int i = 'f'; i <= 'z'; i++) {
-																										stateMatrix[StateTypes::elseKleinState3][i] =
-																												StateTypes::identifierState;
-																							}
+		for (int i = 't'; i <= 'z'; i++) {
+			stateMatrix[StateTypes::elseKleinState2][i] = StateTypes::identifierState;
+		}
 
-												for (int i = '0'; i <= '9'; i++) {
-																										stateMatrix[StateTypes::elseKleinState3][i] =
-																												StateTypes::identifierState;
-																							}
+		for (int i = '0'; i <= '9'; i++) {
+			stateMatrix[StateTypes::elseKleinState2][i] = StateTypes::identifierState;
+		}
 
-								//Übergänge ElseKleinState 4
+		for (int i = 'A'; i <= 'Z'; i++) {
+				stateMatrix[StateTypes::elseKleinState2][i] = StateTypes::identifierState;
+		}
 
-												for (int i = 'a'; i <= 'z'; i++) {
-																										stateMatrix[StateTypes::elseKleinState4][i] =
-																												StateTypes::identifierState;
-																							}
-												for (int i = '0'; i <= '9'; i++) {
-																												stateMatrix[StateTypes::elseKleinState4][i] =
-																														StateTypes::identifierState;
-																									}
+		//Übergänge ElseKleinState3
+
+		for (int i = 'a'; i <= 'd'; i++) {
+			stateMatrix[StateTypes::elseKleinState3][i] = StateTypes::identifierState;
+		}
+
+		stateMatrix[StateTypes::elseKleinState3]['e'] = StateTypes::elseKleinState4;
+
+		for (int i = 'f'; i <= 'z'; i++) {
+			stateMatrix[StateTypes::elseKleinState3][i] = StateTypes::identifierState;
+		}
+
+		for (int i = '0'; i <= '9'; i++) {
+			stateMatrix[StateTypes::elseKleinState3][i] = StateTypes::identifierState;
+		}
+
+		for (int i = 'A'; i <= 'Z'; i++) {
+				stateMatrix[StateTypes::elseKleinState3][i] = StateTypes::identifierState;
+			}
+
+		//Übergänge ElseKleinState 4
+
+		for (int i = 'a'; i <= 'z'; i++) {
+			stateMatrix[StateTypes::elseKleinState4][i] = StateTypes::identifierState;
+		}
+		for (int i = '0'; i <= '9'; i++) {
+			stateMatrix[StateTypes::elseKleinState4][i] = StateTypes::identifierState;
+		}
+		for (int i = 'A'; i <= 'Z'; i++) {
+			stateMatrix[StateTypes::elseKleinState4][i] = StateTypes::identifierState;
+		}
 }
 Automat::~Automat() {
 }
