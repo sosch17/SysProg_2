@@ -1,0 +1,18 @@
+int Else;
+int m;
+
+:*
+int baum;
+n := 3 + 4;
+n := 3*n--5;
+write (n);
+read(n);
+read(m[1]);
+if(n = 26) n := 3 else n := 0;
+
+while(n = 3) m[1] := 2;
+{write(4 + 5);};
+baum := ((2+4)-(2+(7+3))*(4:9))
+IF(!baum = 3) baum := 3 ELSE baum := 4;
+
+*:
