@@ -40,6 +40,15 @@ char* SymTabEntry::getName() {
 char* SymTabEntry::getType() {
 	return type;
 }
+
+/*
+ * Setzt Typ des Eintrags.
+ */
+void SymTabEntry::setType(char* type) {
+	this->type = type;
+}
+
+
 /*
  * Vergleicht ein mitgegebenes lexem mit dem Namen des Eintrags.
  * Param: char* lexem

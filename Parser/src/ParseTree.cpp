@@ -15,10 +15,12 @@ void BasicNode::setTypes(Types t) {
 TreeNode::TreeNode(TreeNode* parent, NodeTypes type) {
 	this->parent = parent;
 	this->nodeType = type;
+	this->children = new LinkedList<BasicNode>;
 }
 
 TreeNode::TreeNode() {
 	this->nodeType = PROG;
+	this->children = new LinkedList<BasicNode>;
 }
 // scanner mit parser verbinden parser muss jedes token einzeln bekommen
 ParseTree::ParseTree(Scanner* scanner) {
@@ -26,7 +28,7 @@ ParseTree::ParseTree(Scanner* scanner) {
     this->currentToken = scanner->getNextToken();
     this->root = new TreeNode();
 
-    cout << "addLeaf: " << endl;
+    cout << "Start" << endl;
     this->prog(this->root);
 
 }
@@ -44,7 +46,7 @@ LeafNode::LeafNode(TreeNode* parent, StateTypes::State terminal, Token* token) {
 
 // muss noch nachvollziehbar werden welcher knoten welche kinder hat???
 LeafNode* ParseTree::addLeaf(TreeNode* parent, StateTypes::State terminal, Token* token) {
-	//cout << "addLeaf: " << token->getName() << ", " << terminal << endl;
+	cout << "addLeaf: " << token->getName() << ", " << terminal << endl;
 
 	LeafNode* leafNode = new LeafNode(parent, terminal, token);
 	if(parent->getChildren()->isEmpty()) {
@@ -94,9 +96,9 @@ void ParseTree::checkTokenType(StateTypes::State stateType)
 
 TreeNode* ParseTree::addNode(TreeNode* parent, NodeTypes type) {
 	TreeNode* treeNode = new TreeNode(parent, type);
+	cout << "addNode: " << type << ", " << endl;
 	if(parent->getChildren()->isEmpty()) {
 		parent->getChildren()->initNode(treeNode);
-		//parent->getChildren()->initNode(treeNode);
 	} else {
 		parent->getChildren()->addNode(treeNode);
 	}
@@ -621,7 +623,6 @@ void ParseTree::op(TreeNode* parent){
 	}
 
 }
-
 
 
 

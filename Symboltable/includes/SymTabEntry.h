@@ -16,6 +16,7 @@ public:
 	char* getName();
 	char* getType();
 	bool compareLexem(char* lexem);
+	void setType(char* type);
 
 private:
 	char* name;
