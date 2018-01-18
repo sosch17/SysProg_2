@@ -69,7 +69,7 @@ $(OBJDIR)/%.o :  $(SRCDIR)/%.cpp $(HEADERDIR)/%.h
 # $< erste abhaengigkeit
 
 
-ParseTreeTest: $(SRCDIR)/TestParseTree.cpp $(HEADERDIR)/ParseTree.h ../Automat/$(HEADERDIR)/StateTypes.h ../Token/$(HEADERDIR)/Token.h $(HEADERDIR)/NodeTypes.h
+ParseTreeTest: $(SRCDIR)/TestParseTree.cpp $(HEADERDIR)/ParseTree.h ../Automat/$(HEADERDIR)/StateTypes.h ../Token/$(HEADERDIR)/Token.h $(HEADERDIR)/NodeTypes.h $(HEADERDIR)/TypeCheck.h
 	g++ -g  -c -Wall src/TestParseTree.cpp -o $(BINDIRTEST)/TestParseTree.o  
 	g++ -g $(BINDIRTEST)/TestParseTree.o ../Buffer/$(OBJDIR)/Buffer.o ../Symboltable/$(OBJDIR)/*.o ../Token/$(OBJDIR)/Token.o ../Automat/$(OBJDIR)/Automat.o ../Scanner/$(OBJDIR)/*.o $(OBJDIR)/*.o -o $(BINDIRTEST)/ParseTreeTest
 

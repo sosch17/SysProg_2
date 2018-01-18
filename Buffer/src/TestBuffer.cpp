@@ -1,5 +1,5 @@
 #include "../includes/Buffer.h"
-#include "../Buffer.cpp"
+#include "Buffer.cpp"
 #include <iostream>
 #include <fstream>
 using namespace std;

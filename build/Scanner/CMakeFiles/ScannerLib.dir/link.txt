@@ -1,0 +1,2 @@
+/usr/bin/ar cr libScannerLib.a  CMakeFiles/ScannerLib.dir/src/Scanner.cpp.o CMakeFiles/ScannerLib.dir/src/OutputBuffer.cpp.o
+/usr/bin/ranlib libScannerLib.a

@@ -1,0 +1,2 @@
+/usr/bin/ar cr libAutomatLib.a  CMakeFiles/AutomatLib.dir/src/Automat.cpp.o
+/usr/bin/ranlib libAutomatLib.a

@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/ScannerTest.dir/src/TestScanner.cpp.o  -o ScannerTest -rdynamic libScannerLib.a ../Token/libTokenLib.a ../Automat/libAutomatLib.a ../Buffer/libBufferLib.a ../Symboltable/libSymboltableLib.a 

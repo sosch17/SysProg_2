@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Symboltable/includes/LinkedList.h
+iostream
+-
+
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Symboltable/includes/StringTab.h
+
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Symboltable/includes/SymTabEntry.h
+
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Symboltable/includes/Symboltable.h
+SymTabEntry.h
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Symboltable/includes/SymTabEntry.h
+LinkedList.h
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Symboltable/includes/LinkedList.h
+StringTab.h
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Symboltable/includes/StringTab.h
+
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Symboltable/src/TestSymboltable.cpp
+../includes/Symboltable.h
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Symboltable/includes/Symboltable.h
+iostream
+-
+

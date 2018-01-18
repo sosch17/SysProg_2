@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/SymboltableTest.dir/src/TestSymboltable.cpp.o  -o SymboltableTest -rdynamic libSymboltableLib.a 

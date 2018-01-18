@@ -1,4 +1,3 @@
-#include "../includes/ParseTree.h"
 #include "../includes/TypeCheck.h"
 #include <iostream>
 
