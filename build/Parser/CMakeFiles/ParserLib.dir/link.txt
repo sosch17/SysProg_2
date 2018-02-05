@@ -1,2 +1,0 @@
-/usr/bin/ar cr libParserLib.a  CMakeFiles/ParserLib.dir/src/ParseTree.cpp.o CMakeFiles/ParserLib.dir/src/TypeCheck.cpp.o
-/usr/bin/ranlib libParserLib.a

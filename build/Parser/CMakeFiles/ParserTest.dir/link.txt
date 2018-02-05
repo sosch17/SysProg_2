@@ -1,1 +1,0 @@
-/usr/bin/c++       CMakeFiles/ParserTest.dir/src/TestParseTree.cpp.o  -o ParserTest -rdynamic libParserLib.a ../Scanner/libScannerLib.a ../Automat/libAutomatLib.a ../Symboltable/libSymboltableLib.a ../Token/libTokenLib.a ../Buffer/libBufferLib.a 

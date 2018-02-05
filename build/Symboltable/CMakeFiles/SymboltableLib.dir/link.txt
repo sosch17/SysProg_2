@@ -1,2 +1,0 @@
-/usr/bin/ar cr libSymboltableLib.a  CMakeFiles/SymboltableLib.dir/src/LinkedList.cpp.o CMakeFiles/SymboltableLib.dir/src/StringTab.cpp.o CMakeFiles/SymboltableLib.dir/src/Symboltable.cpp.o CMakeFiles/SymboltableLib.dir/src/SymTabEntry.cpp.o
-/usr/bin/ranlib libSymboltableLib.a

@@ -128,7 +128,7 @@ Token* Scanner::getNextToken() {
  */
 Token* Scanner::createToken(StateTypes::State state, int line, int column) {
 	Token* token;
-	SymTabEntry* key = '\0';
+	Node<SymTabEntry>* key = '\0';
 
 	if (eofChar == '\0') {
 		lastchar = buffer->getPreviousChar();
@@ -146,6 +146,7 @@ Token* Scanner::createToken(StateTypes::State state, int line, int column) {
 	}
 
 	token = new Token(state, tokenChar, line, column);
+//	cout << "setKey:  " << key << endl;
 	token->setKey(key);
 	resetTemporaryChars();
 	//WordSize fuer naechsten Token auf null setzen!
@@ -173,6 +174,6 @@ void Scanner::resetTemporaryChars() {
 }
 
 bool Scanner::isEndOfFile() {
-	return this->buffer->getEndOfFile();
+	return eofChar == (char)'\0';
 }
 

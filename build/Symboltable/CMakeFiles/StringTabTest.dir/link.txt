@@ -1,1 +1,0 @@
-/usr/bin/c++       CMakeFiles/StringTabTest.dir/src/TestStringTab.cpp.o  -o StringTabTest -rdynamic libSymboltableLib.a 

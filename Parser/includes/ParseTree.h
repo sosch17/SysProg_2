@@ -26,9 +26,12 @@ public:
 	// für TypeCheck
 	Types getTypes();
 	void setTypes(Types t);
+	bool isLeaf();
+	void setLeaf(bool leaf);
 
 private:
 	Types type;
+	bool leaf;
 };
 
 class TreeNode : public BasicNode {

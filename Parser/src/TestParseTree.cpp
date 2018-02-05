@@ -10,7 +10,6 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	printf( "\nHello World\n\n" );
 	Scanner* s = new Scanner("/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2-master/Test.txt");
 
 	Token* t;

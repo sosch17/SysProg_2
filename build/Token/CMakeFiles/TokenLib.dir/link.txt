@@ -1,2 +1,0 @@
-/usr/bin/ar cr libTokenLib.a  CMakeFiles/TokenLib.dir/src/Token.cpp.o
-/usr/bin/ranlib libTokenLib.a

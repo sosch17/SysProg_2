@@ -1,1 +1,0 @@
-/usr/bin/c++       CMakeFiles/OutputBufferTest.dir/src/TestOutputBuffer.cpp.o  -o OutputBufferTest -rdynamic libScannerLib.a ../Token/libTokenLib.a ../Automat/libAutomatLib.a ../Buffer/libBufferLib.a ../Symboltable/libSymboltableLib.a 

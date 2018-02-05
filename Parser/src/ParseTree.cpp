@@ -4,6 +4,16 @@ BasicNode::BasicNode() {
 	this->type = noType;
 }
 
+bool BasicNode::isLeaf()
+{
+	return this->leaf;
+}
+
+void BasicNode::setLeaf(bool leaf)
+{
+	this->leaf = leaf;
+}
+
 Types BasicNode::getTypes() {
 	return this->type;
 }
@@ -16,16 +26,23 @@ TreeNode::TreeNode(TreeNode* parent, NodeTypes type) {
 	this->parent = parent;
 	this->nodeType = type;
 	this->children = new LinkedList<BasicNode>;
+	this->setLeaf(false);
 }
 
 TreeNode::TreeNode() {
 	this->nodeType = PROG;
+	this->parent = NULL;
 	this->children = new LinkedList<BasicNode>;
 }
 // scanner mit parser verbinden parser muss jedes token einzeln bekommen
 ParseTree::ParseTree(Scanner* scanner) {
 	this->scanner = scanner;
-    this->currentToken = scanner->getNextToken();
+	if(scanner->eofChar != (char)'\0') {
+	    this->currentToken = scanner->getNextToken();
+	} else {
+		cout << "ende" << endl ;
+	}
+
     this->root = new TreeNode();
 
     cout << "Start" << endl;
@@ -42,6 +59,7 @@ LeafNode::LeafNode(TreeNode* parent, StateTypes::State terminal, Token* token) {
 	this->parent = parent;
 	this->terminal = terminal;
 	this->token = token;
+	this->setLeaf(true);
 }
 
 // muss noch nachvollziehbar werden welcher knoten welche kinder hat???
@@ -55,8 +73,12 @@ LeafNode* ParseTree::addLeaf(TreeNode* parent, StateTypes::State terminal, Token
 		parent->getChildren()->addNode(leafNode);
 	}
 //	Fehlerbehandlung muss noch ausgearbeitet werden!!
-
-	this->currentToken = scanner->getNextToken();
+	if(!this->scanner->isEndOfFile()) {
+		this->currentToken = scanner->getNextToken();
+		cout << "nicht ende" << endl;
+	} else {
+		cout << "ende" << endl;
+	}
 	return leafNode;
 	 //hier dann nächsten Token holen???
 }
@@ -74,6 +96,10 @@ TreeNode* LeafNode::getParent() {
 
 Token* LeafNode::getToken() {
 	return this->token;
+}
+
+StateTypes::State LeafNode::getTerminal(){
+	return this->token->getName();
 }
 
 void ParseTree::error() {
@@ -96,10 +122,12 @@ void ParseTree::checkTokenType(StateTypes::State stateType)
 
 TreeNode* ParseTree::addNode(TreeNode* parent, NodeTypes type) {
 	TreeNode* treeNode = new TreeNode(parent, type);
-	cout << "addNode: " << type << ", " << endl;
+
 	if(parent->getChildren()->isEmpty()) {
+//		cout << "addNode: " << type << endl;
 		parent->getChildren()->initNode(treeNode);
 	} else {
+//		cout << "ADDNODE: " << type << endl;
 		parent->getChildren()->addNode(treeNode);
 	}
 	return treeNode;
@@ -227,21 +255,33 @@ bool ParseTree::isReachableTerminal(Token* token, NodeTypes type) {
 }
 
 void ParseTree::prog(TreeNode* parent){
+
 	if(this->isReachableTerminal(this->currentToken, DECLS)) {
 		this->decls(parent);
+	} else {
+		TreeNode* node = this->addNode(parent, DECLS);
+		this->addNode(node, EPSILON);
 	}
-	else if(this->isReachableTerminal(this->currentToken, STATEMENTS)) {
+
+	if(this->isReachableTerminal(this->currentToken, STATEMENTS)) {
 			this->statements(parent);
+	} else {
+		TreeNode* node = this->addNode(parent, DECLS);
+		this->addNode(node, EPSILON);
 	}
-	else{
+
+	if(this->isReachableTerminal(this->currentToken, DECLS) && this->isReachableTerminal(this->currentToken, STATEMENTS))
+	{
 		this->error();
 	}
+
+
 	//this->decls(parent);
 	//this->statements(parent);
 }
 
 void ParseTree::decls(TreeNode* parent){
-
+// da ist der fehler irgendwo
 	if(this->isReachableTerminal(this->currentToken, DECL)) {
 		TreeNode* node = this->addNode(parent, DECLS);
 		this->decl(node);
@@ -255,7 +295,8 @@ void ParseTree::decls(TreeNode* parent){
 				  this->addLeaf(node, StateTypes::semikolonState, this->currentToken);
 			}
 	} else {
-		TreeNode* node = this->addNode(parent, EPSILON);
+		TreeNode* node = this->addNode(parent, DECLS);
+		this->addNode(node, EPSILON);
 	}
 	//kein error() da decls epsilon sein kann
 
@@ -289,7 +330,8 @@ void ParseTree::array(TreeNode* parent){
 		this->checkTokenType(StateTypes::eckigeKlammerZuState);
 		this->addLeaf(node, StateTypes::eckigeKlammerZuState, this->currentToken);
 	} else {
-		TreeNode* node = this->addNode(parent, EPSILON);
+		TreeNode* node = this->addNode(parent, ARRAY);
+		this->addNode(node, EPSILON);
 	}
 	//kein error() da array epsilon sein kann
 
@@ -311,7 +353,8 @@ void ParseTree::statements(TreeNode* parent){
 				this->addLeaf(node, StateTypes::semikolonState, this->currentToken);
 			}
 	} else {
-		TreeNode* node = this->addNode(parent, EPSILON);
+		TreeNode* node = this->addNode(parent, STATEMENTS);
+		this->addNode(node, EPSILON);
 	}
 	//kein error() da array epsilon sein kann
 
@@ -549,7 +592,8 @@ void ParseTree::index(TreeNode* parent){
 			this->checkTokenType(StateTypes::eckigeKlammerZuState);
 			this->addLeaf(node, StateTypes::eckigeKlammerZuState, this->currentToken);
 	} else {
-		TreeNode* node = this->addNode(parent, EPSILON);
+		TreeNode* node = this->addNode(parent, INDEX);
+		this->addNode(node, EPSILON);
 	}
 	//kein error() da index epsilon sein kann
 
@@ -566,7 +610,8 @@ void ParseTree::op_exp(TreeNode* parent){
 			this->op(node);
 			this->exp(node);
 	} else {
-		TreeNode* node = this->addNode(parent, EPSILON);
+		TreeNode* node = this->addNode(parent, OPEXP);
+		this->addNode(node, EPSILON);
 	}
 	//kein error() da index epsilon sein kann
 
@@ -623,6 +668,7 @@ void ParseTree::op(TreeNode* parent){
 	}
 
 }
+
 
 
 
