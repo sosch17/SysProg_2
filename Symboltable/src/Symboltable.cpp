@@ -48,21 +48,21 @@ void Symboltable::initSymbols() {
  * Param: char* lexem
  * Return: SymTabEntry* eintragsAdresse
  */
-Node<SymTabEntry>* Symboltable::insert(char* lexem, int size, char* type) {
-	Node<SymTabEntry>* lookupValue = this->lookup(lexem);
+SymTabEntry* Symboltable::insert(char* lexem, int size, char* type) {
+	SymTabEntry* lookupValue = this->lookup(lexem);
 	if (lookupValue == NULL) {
 		long key = this->hash(lexem);
 		char* posInStringTab = this->strT->insert(lexem, size); // Referenz auf Stelle in StringTab
 		SymTabEntry* entry = new SymTabEntry(posInStringTab, "Identifier");
 		if (this->hashTable[key].isEmpty() == false) {
 
-			return this->hashTable[key].addNode(entry);
+			this->hashTable[key].addNode(entry);
 			//wenn schon Einträge bestehen
-//			return entry;
+			return entry;
 
 		} else {
-			return this->hashTable[key].initNode(entry);
-//			return entry;
+			this->hashTable[key].initNode(entry);
+			return entry;
 		}
 	} else {
 		return lookupValue;
@@ -75,15 +75,12 @@ Node<SymTabEntry>* Symboltable::insert(char* lexem, int size, char* type) {
  * Return: unsigned long hashwert
  */
 unsigned long Symboltable::hash(char* lexem) {
-	long precision = 3;
+	long precision = 2;
 	unsigned long hash = 0;
 	while (*lexem) {
 		hash += (*(unsigned long*) lexem) >> precision;
 		lexem++;
 	}
-//    while (*lexem)
-//        hash = (hash * 22) + *lexem++ - '0';
-//	hash = hash % 1024;
 	hash = hash % 512;
 	return hash;
 }
@@ -92,30 +89,24 @@ unsigned long Symboltable::hash(char* lexem) {
  * Param: char* lexem
  * return: SymTabEntry* adresseDesGefunden
  */
-Node<SymTabEntry>* Symboltable::lookup(char* lexem) {
+SymTabEntry* Symboltable::lookup(char* lexem) {
 	unsigned long key = this->hash(lexem);
 
 	if (this->hashTable[key].isEmpty() == true) {
 		return NULL;
 	} else {
 		Node<SymTabEntry>* pos = this->hashTable[key].getHead();
-		if (pos->getNext() == NULL) {
-			if (pos->getData()->compareLexem(lexem) == true) {
-				return pos;
-			} else {
-				return NULL;
-			}
-		}
+
 		while (pos->getNext() != NULL) {
 			if (pos->getData()->compareLexem(lexem) == true) {
-				return pos;
+				return pos->getData();
 			} else {
 				pos = pos->getNext();
 			}
 		}
 		if (pos->getNext() == NULL) {
 			if (pos->getData()->compareLexem(lexem) == true) {
-				return pos;
+				return pos->getData();
 			} else {
 				return NULL;
 			}

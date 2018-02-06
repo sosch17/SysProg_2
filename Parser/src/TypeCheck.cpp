@@ -11,25 +11,28 @@ TypeCheck::TypeCheck(ParseTree* tree) {
 }
 
 Types TypeCheck::progTC(TreeNode* node) {
-	cout << "progTC" <<endl;
+	cout << "progTC" << endl;
 
 	TreeNode* c1 = (TreeNode*) node->getChildren()->getHead()->getData();
 	TreeNode* c2 =
 					(TreeNode*) node->getChildren()->getHead()->getNext()->getData();
 
-	if (c1->getNodeType() != EPSILON) {
-		this->declsTC(c1);
-	}
-	if (c2->getNodeType() != EPSILON) {
-		this->statementsTC(c2);
-	}
+//	if (c1->getNodeType() != EPSILON) {
+//
+//	}
+//	if (c2->getNodeType() != EPSILON) {
+//
+//	}
 
-	node->setTypes(noType); // eigentlich egal da default noType
+	this->declsTC(c1);
+	this->statementsTC(c2);
 
+	node->setTypes(noType);
+	return noType;
 }
 
 Types TypeCheck::declsTC(TreeNode* node) {
-	cout << "declsTC" <<endl;
+	cout << "declsTC" << endl;
 	TreeNode* c1 = (TreeNode*) node->getChildren()->getHead()->getData();
 
 	if(c1->getNodeType() == EPSILON) {
@@ -47,27 +50,27 @@ Types TypeCheck::declsTC(TreeNode* node) {
 }
 
 Types TypeCheck::declTC(TreeNode* node) {
-	cout << "declTC" <<endl;
+	cout << "declTC" << endl;
 	TreeNode* c2 =
 			(TreeNode*) node->getChildren()->getHead()->getNext()->getData();
 	LeafNode* c3 =
 			(LeafNode*) node->getChildren()->getHead()->getNext()->getNext()->getData();
 	this->arrayTC(c2);
 	Types arrayResultType = c2->getTypes();
-	if (c3->getToken()->getKey()->getData()->getType() == "intArrayType"
-			|| c3->getToken()->getKey()->getData()->getType() == "intType") {
+	if (c3->getToken()->getKey()->getType() == "intArrayType"
+			|| c3->getToken()->getKey()->getType() == "intType") {
 		cout << "identifier already defined. Error in Line - "
 				<< c3->getToken()->getLine() << "  Column - "
 				<< c3->getToken()->getColumn() << endl;
 		node->setTypes(errorType);
 		return errorType;
 	} else if (arrayResultType == arrayType) {
-		c3->getToken()->getKey()->getData()->setType("intArrayType");
+		c3->getToken()->getKey()->setType("intArrayType");
 		node->setTypes(intArrayType);
 		return intArrayType;
 		//wenn arrayTC einen arrayType ergeben hat, dann wird c3 zu intArrayType, ansonsten intType
 	} else if (arrayResultType == noType) {
-		c3->getToken()->getKey()->getData()->setType("intType");
+		c3->getToken()->getKey()->setType("intType");
 		node->setTypes(intType);
 		return intType;
 	}
@@ -80,29 +83,27 @@ Types TypeCheck::arrayTC(TreeNode* node) {
 	cout << "arrayTC" <<endl;
 	BasicNode* c1 = node->getChildren()->getHead()->getData();
 
-	if(c1->isLeaf())
-	{
-		LeafNode* c1 = (LeafNode*) node->getChildren()->getHead()->getData();
-		LeafNode* c2 = (LeafNode*) node->getChildren()->getHead()->getNext()->getData();
-		if (c2->getToken()->getContentInt() > 0) {
-			node->setTypes(arrayType);
-			return arrayType;
-		} else {
-			cout << "No valid dimensions." << c2->getToken()->getLine()
-					<< "  Column - " << c2->getToken()->getColumn() << endl;
-			node->setTypes(errorType);
-			return errorType;
+		if(c1->isLeaf())
+		{
+			LeafNode* c2 = (LeafNode*) node->getChildren()->getHead()->getNext()->getData();
+			if (c2->getToken()->getContentInt() > 0) {
+				node->setTypes(arrayType);
+				return arrayType;
+			} else {
+				cout << "No valid dimensions." << c2->getToken()->getLine()
+						<< "  Column - " << c2->getToken()->getColumn() << endl;
+				node->setTypes(errorType);
+				return errorType;
+			}
 		}
-	}
-	else{
-		node->setTypes(noType);
-				return noType;
-	}
+		else{
+			node->setTypes(noType);
+					return noType;
+		}
 }
 
 Types TypeCheck::statementsTC(TreeNode* node) {
-	cout << "statementsTC" <<endl;
-
+	cout << "statementsTC" << endl;
 	TreeNode* c1 = (TreeNode*) node->getChildren()->getHead()->getData();
 
 	if(c1->getNodeType() == EPSILON) {
@@ -140,7 +141,7 @@ Types TypeCheck::statementsTC(TreeNode* node) {
 }
 
 Types TypeCheck::statementTC(TreeNode* node) {
-	cout << "statementTC" <<endl;
+	cout << "statementTC" << endl;
 	LeafNode* c1 = (LeafNode*) node->getChildren()->getHead()->getData();
 	TreeNode* c2 =
 			(TreeNode*) node->getChildren()->getHead()->getNext()->getData();
@@ -152,19 +153,21 @@ Types TypeCheck::statementTC(TreeNode* node) {
 	this->expTC(c4);
 	Types expResultType = c4->getTypes();
 
-	if (c1->getToken()->getKey()->getData()->getType() != "intArrayType"
-			&& c1->getToken()->getKey()->getData()->getType() != "intType") {
-		cout << "StatementTC: Identifier not defined." << c1->getToken()->getLine()
+	if (c1->getToken()->getKey()->getType() != "intArrayType"
+			&& c1->getToken()->getKey()->getType() != "intType") {
+		cout << "Statement TC Identifier not defined." << c1->getToken()->getLine()
 				<< "  Column - " << c1->getToken()->getColumn() << endl;
 		node->setTypes(errorType);
 		return errorType;
 	} else if (expResultType == intType
-				&& ((c1->getToken()->getKey()->getData()->getType() == "intType"&& indexResultType == noType)
-				|| (c1->getToken()->getKey()->getData()->getType() == "intArrayType"&& indexResultType == arrayType))) {
+			&& ((c1->getToken()->getKey()->getType() == "intType"
+					&& indexResultType == noType)
+					|| (c1->getToken()->getKey()->getType() == "intArrayType"
+							&& indexResultType == arrayType))) {
 		node->setTypes(noType);
 		return noType;
 	} else {
-		cout << "1Incompatible types." << c1->getToken()->getLine()
+		cout << "Incompatible types." << c1->getToken()->getLine()
 				<< "  Column - " << c1->getToken()->getColumn() << endl;
 		node->setTypes(errorType);
 		return errorType;
@@ -173,15 +176,14 @@ Types TypeCheck::statementTC(TreeNode* node) {
 }
 
 Types TypeCheck::statementTC2(TreeNode* node) {
-	cout << "statement_2TC" <<endl;
+	cout << "statementTC2" << endl;
 	TreeNode* c3 = (TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getData();
-	cout << c3->getTypes() << endl;
+
 	return this->expTC(c3);  //return?
 }
 
 Types TypeCheck::statementTC3(TreeNode* node) {
-	cout << "statement_3TC" <<endl;
-
+	cout << "statementTC3" << endl;
 	LeafNode* c3 =
 			(LeafNode*) node->getChildren()->getHead()->getNext()->getNext()->getData();
 	TreeNode* c4 =
@@ -190,20 +192,20 @@ Types TypeCheck::statementTC3(TreeNode* node) {
 	this->indexTC(c4);
 	Types indexResultType = c4->getTypes();
 
-	if (c3->getToken()->getKey()->getData()->getType() != "intArrayType"
-			&& c3->getToken()->getKey()->getData()->getType() != "intType") {
-		cout << "StatementTC3: Identifier not defined." << c3->getToken()->getLine()
+	if (c3->getToken()->getKey()->getType() != "intArrayType"
+			&& c3->getToken()->getKey()->getType() != "intType") {
+		cout << " StatementsTC3 Identifier not defined." << c3->getToken()->getLine()
 				<< "  Column - " << c3->getToken()->getColumn() << endl;
 		node->setTypes(errorType);
 		return errorType;
-	} else if ((c3->getToken()->getKey()->getData()->getType() == "intType"
+	} else if ((c3->getToken()->getKey()->getType() == "intType"
 			&& indexResultType == noType)
-			|| (c3->getToken()->getKey()->getData()->getType() == "intArrayType"
+			|| (c3->getToken()->getKey()->getType() == "intArrayType"
 					&& indexResultType == arrayType)) {
 		node->setTypes(noType);
 		return noType;  //return?
 	} else {
-		cout << "2Incompatible types." << c3->getToken()->getLine()
+		cout << "Incompatible types." << c3->getToken()->getLine()
 				<< "  Column - " << c3->getToken()->getColumn() << endl;
 		node->setTypes(errorType);
 		return errorType;
@@ -211,7 +213,7 @@ Types TypeCheck::statementTC3(TreeNode* node) {
 }
 
 Types TypeCheck::statementTC4(TreeNode* node) {
-	cout << "statement_4TC" <<endl;
+	cout << "statementTC4" << endl;
 	TreeNode* c2 =
 			(TreeNode*) node->getChildren()->getHead()->getNext()->getData();
 
@@ -221,7 +223,7 @@ Types TypeCheck::statementTC4(TreeNode* node) {
 }
 
 Types TypeCheck::statementTC5(TreeNode* node) {
-	cout << "statement_5TC" <<endl;
+	cout << "statementTC5" << endl;
 	TreeNode* c3 =
 			(TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getData();
 	TreeNode* c5 =
@@ -284,7 +286,7 @@ Types TypeCheck::statementTC5(TreeNode* node) {
 }
 
 Types TypeCheck::statementTC6(TreeNode* node) {
-	cout << "statement_6TC" <<endl;
+	cout << "statementTC6" << endl;
 	TreeNode* c3 =
 			(TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getData();
 	TreeNode* c5 =
@@ -327,35 +329,33 @@ Types TypeCheck::statementTC6(TreeNode* node) {
 Types TypeCheck::indexTC(TreeNode* node) {
 	cout << "indexTC" <<endl;
 
-	BasicNode* c1 = node->getChildren()->getHead()->getData();
+		BasicNode* c1 = node->getChildren()->getHead()->getData();
 
-	if (c1->isLeaf()==false) {  //EPSILON
-		node->setTypes(noType);
-		return noType;
+		if (c1->isLeaf()==false) {  //EPSILON
+			node->setTypes(noType);
+			return noType;
 
-	} else {
-		TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
+		} else {
+			TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
 
-		this->expTC(c2);
-		Types expResultType = c2->getTypes();
+			this->expTC(c2);
+			Types expResultType = c2->getTypes();
 
-		if(expResultType == errorType)
-		{
-			node->setTypes(errorType);
-			return errorType;
+			if(expResultType == errorType)
+			{
+				node->setTypes(errorType);
+				return errorType;
+			}
+			else{
+				node->setTypes(arrayType);
+				return arrayType;
+			}
 		}
-		else{
-			node->setTypes(arrayType);
-			return arrayType;
-		}
-	}
-
-
 }
 
 
 Types TypeCheck::expTC(TreeNode* node) {
-	cout << "expTC" <<endl;
+	cout << "expTC" << endl;
 	TreeNode* c1 = (TreeNode*) node->getChildren()->getHead()->getData();
 	TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
 
@@ -403,7 +403,7 @@ Types TypeCheck::expTC(TreeNode* node) {
 
 
 Types TypeCheck::exp2TC(TreeNode* node) {
-	cout << "exp2TC" <<endl;
+	cout << "exp2TC" << endl;
 	TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
 
 	this->expTC(c2);
@@ -412,23 +412,23 @@ Types TypeCheck::exp2TC(TreeNode* node) {
 }
 
 Types TypeCheck::exp2TC2(TreeNode* node) {
-	cout << "exp2_2TC" <<endl;
+	cout << "exp2TC2" << endl;
 	LeafNode* c1 = (LeafNode*) node->getChildren()->getHead()->getData();
 	TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
 
 	this->indexTC(c2);
 	Types indexResultType = c2->getTypes();
 
-	if (c1->getToken()->getKey()->getData()->getType() != "intArrayType"
-			&& c1->getToken()->getKey()->getData()->getType() != "intType") {
-		cout << "exp2TC2: Identifier not defined." << c1->getToken()->getLine()
+	if (c1->getToken()->getKey()->getType() != "intArrayType"
+			&& c1->getToken()->getKey()->getType() != "intType") {
+		cout << "EXP2TC2 Identifier not defined." << c1->getToken()->getLine()
 				<< "  Column - " << c1->getToken()->getColumn() << endl;
 		node->setTypes(errorType);
 		return errorType;
-	} else if(c1->getToken()->getKey()->getData()->getType() == "intType" && indexResultType == noType) {
+	} else if(c1->getToken()->getKey()->getType() == "intType" && indexResultType == noType) {
 		node->setTypes(intType);
 		return intType;
-	} else if(c1->getToken()->getKey()->getData()->getType() == "intArrayType" && indexResultType == arrayType) {
+	} else if(c1->getToken()->getKey()->getType() == "intArrayType" && indexResultType == arrayType) {
 		node->setTypes(intType);
 	} else {
 		cout << "No primitive type" << c1->getToken()->getLine()
@@ -439,13 +439,15 @@ Types TypeCheck::exp2TC2(TreeNode* node) {
 }
 
 Types TypeCheck::exp2TC3(TreeNode* node) {
-	cout << "exp2_3TC" <<endl;
+	cout << "exp2TC3" << endl;
+	LeafNode* c1 = (LeafNode*) node->getChildren()->getHead()->getData();
+
 	node->setTypes(intType);
 	return intType;
 }
 
 Types TypeCheck::exp2TC4(TreeNode* node) {
-	cout << "exp2_4TC" <<endl;
+	cout << "exp2TC4" << endl;
 	TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
 
 	switch (c2->getNodeType()) {
@@ -473,7 +475,7 @@ Types TypeCheck::exp2TC4(TreeNode* node) {
 }
 
 Types TypeCheck::exp2TC5(TreeNode* node) {
-	cout << "exp2_5TC" <<endl;
+	cout << "exp2TC5" << endl;
 	TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
 
 	switch (c2->getNodeType()) {
@@ -507,7 +509,7 @@ Types TypeCheck::exp2TC5(TreeNode* node) {
 }
 
 Types TypeCheck::op_expTC(TreeNode* node) {
-	cout << "op_expTC" <<endl;
+	cout << "op_expTC" << endl;
 	TreeNode* c1 = (TreeNode*) node->getChildren()->getHead()->getData();
 
 	if(c1->getNodeType() == EPSILON) {
@@ -525,7 +527,7 @@ Types TypeCheck::op_expTC(TreeNode* node) {
 }
 
 Types TypeCheck::opTC(TreeNode* node) {
-	cout << "opTC" <<endl;
+	cout << "opTC" << endl;
 	LeafNode* c1 = (LeafNode*) node->getChildren()->getHead()->getData();
 
 	switch (c1->getTerminal()) {
@@ -558,4 +560,3 @@ Types TypeCheck::opTC(TreeNode* node) {
 			return opAnd;
 		}
 }
-

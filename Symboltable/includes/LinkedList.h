@@ -76,16 +76,15 @@ public:
 	 * Initialisiere den ersten Knoten mit übergebenenem Inhalt.
 	 * Param: T* value
 	 */
-	Node<T>* initNode(T* value) {
+	void initNode(T* value) {
 		this->head = new Node<T>(value);
-		return this->head;
 	}
 
 	/*
 	 * Knoten hinzufügen mit übergebenem Inhalt.
 	 * Param: T* value
 	 */
-	Node<T>* addNode(T* value) {
+	void addNode(T* value) {
 		Node<T> *newNode = new Node<T>(value);
 
 		Node<T> *cur = head;
@@ -93,11 +92,10 @@ public:
 		while(cur) {
 			if(cur->getNext() == NULL) {
 				cur->setNext(newNode);
-				return newNode;
+				return;
 			}
 			cur = cur->getNext();
 		}
-		return newNode;
 	}
 
 	/*
@@ -105,7 +103,7 @@ public:
 	 * Return: boolean istLeer
 	 */
 	bool isEmpty() {
-		if(this->head->getData() == NULL) {
+		if(head->getData() == NULL) {
 			return true;
 		}
 		return false;

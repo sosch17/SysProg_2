@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Symboltable/includes/StringTab.h
+
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Symboltable/src/TestStringTab.cpp
+../includes/StringTab.h
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Symboltable/includes/StringTab.h
+iostream
+-
+

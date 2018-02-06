@@ -101,9 +101,11 @@ Token* Scanner::getNextToken() {
 	//Befuelle das Token
 	StateTypes::State state = automat->getLastFinalState();
 
-	//falls im zustand eines unvollständigen while oder if mache state zu identifier
+	//falls im zustand eines unvollständigen while, if, else, read, write mache state zu identifier
 	if (state == 3 || state == 5 || (state >= 7 && state <= 10)
-			|| (state >= 12 && state <= 15)) {
+			|| (state >= 12 && state <= 15) || (state >= 51 && state <= 53)
+			|| (state >= 39 && state <= 41) || (state >= 43 && state <= 45)
+			|| (state >= 47 && state <= 49)) {
 		state = StateTypes::identifierState;
 	}
 
@@ -128,7 +130,7 @@ Token* Scanner::getNextToken() {
  */
 Token* Scanner::createToken(StateTypes::State state, int line, int column) {
 	Token* token;
-	Node<SymTabEntry>* key = '\0';
+	SymTabEntry* key = '\0';
 
 	if (eofChar == '\0') {
 		lastchar = buffer->getPreviousChar();
@@ -146,7 +148,6 @@ Token* Scanner::createToken(StateTypes::State state, int line, int column) {
 	}
 
 	token = new Token(state, tokenChar, line, column);
-//	cout << "setKey:  " << key << endl;
 	token->setKey(key);
 	resetTemporaryChars();
 	//WordSize fuer naechsten Token auf null setzen!
@@ -174,6 +175,6 @@ void Scanner::resetTemporaryChars() {
 }
 
 bool Scanner::isEndOfFile() {
-	return eofChar == (char)'\0';
+	return this->buffer->getEndOfFile();
 }
 

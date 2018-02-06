@@ -65,11 +65,11 @@ int Token::getColumn() {
 	return this->column;
 }
 
-Node<SymTabEntry>* Token::getKey() {
+SymTabEntry* Token::getKey() {
 	return this->key;
 }
 
-void Token::setKey(Node<SymTabEntry>* myKey) {
+void Token::setKey(SymTabEntry* myKey) {
 	this->key = myKey;
 }
 

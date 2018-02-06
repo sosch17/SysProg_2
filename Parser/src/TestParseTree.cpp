@@ -10,11 +10,9 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	Scanner* s = new Scanner("/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2-master/Test.txt");
+	Scanner* s = new Scanner("/home/leonie/Downloads/SysProg_2/Test.txt");
 
-	Token* t;
-
-	ofstream myfile("/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2-master/out.txt");
+//	ofstream myfile("/home/leonie/Downloads/SysProg_2/out.txt");
 
 //		while ( s->eofChar != (char)'\0'){
 //			t = s->getNextToken();
@@ -23,9 +21,9 @@ int main(int argc, char **argv) {
 //
 //		}
 
-	myfile.close();
+//	myfile.close();
 	ParseTree* parseTree = new ParseTree(s);
-	TypeCheck* typeCheck = new TypeCheck(parseTree);
+	new TypeCheck(parseTree);
 // hier typecheck von tree machen
 
 	return EXIT_SUCCESS;

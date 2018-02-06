@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/AutomatTest.dir/src/TestAutomat.cpp.o  -o AutomatTest -rdynamic libAutomatLib.a 

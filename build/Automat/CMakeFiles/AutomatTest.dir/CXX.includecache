@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Automat/includes/Automat.h
+StateTypes.h
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Automat/includes/StateTypes.h
+iostream
+-
+
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Automat/includes/StateTypes.h
+
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Automat/src/TestAutomat.cpp
+../includes/Automat.h
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Automat/includes/Automat.h
+

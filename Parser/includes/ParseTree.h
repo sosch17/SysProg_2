@@ -16,8 +16,6 @@
 #include <fstream>
 using namespace std;
 
-
-
 class TreeNode;
 
 class BasicNode {

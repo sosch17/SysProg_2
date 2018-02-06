@@ -9,7 +9,6 @@
 #define TOKEN_H_
 #include <stdlib.h>
 #include <stdio.h>
-#include "../../Symboltable/includes/LinkedList.h"
 #include "../../Automat/includes/Automat.h"
 #include "../../Symboltable/includes/SymTabEntry.h"
 
@@ -22,8 +21,8 @@ public:
 	int getContentInt();
 	int getLine();
 	int getColumn();
-	Node<SymTabEntry>* getKey();
-	void setKey(Node<SymTabEntry>* myKey);
+	SymTabEntry* getKey();
+	void setKey(SymTabEntry* myKey);
 
 private:
 	StateTypes::State iD;
@@ -31,7 +30,7 @@ private:
 	int contentInt;
 	int line;
 	int column;
-	Node<SymTabEntry>* key;
+	SymTabEntry* key;
 };
 
 #endif /* TOKEN_H_ */

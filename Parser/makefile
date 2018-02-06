@@ -14,8 +14,9 @@ OBJDIR = objs
 BINDIRTEST = debug
 #		Targets zum Bauen des Tests
 #
-OBJS = $(OBJDIR)/ParseTree.o \
-		$(OBJDIR)/TypeCheck.o
+OBJS = $(OBJDIR)/ParseTree.o\
+	   $(OBJDIR)/TypeCheck.o\
+	   $(OBJDIR)/MakeCode.o
 #
 #
 ## Linken der Object-files, abhaengig von ParserTarget und TestParserTarget

@@ -1,2 +1,7 @@
-int a;
+int Else;
 int m;
+int [3] n;
+
+Else := 4+3;
+m := 5;
+if(n[1] =:= m) m := 2 else m:= 4;

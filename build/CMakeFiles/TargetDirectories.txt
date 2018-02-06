@@ -1,0 +1,14 @@
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Automat/CMakeFiles/AutomatLib.dir
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Automat/CMakeFiles/AutomatTest.dir
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Buffer/CMakeFiles/BufferLib.dir
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Buffer/CMakeFiles/BufferTest.dir
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Symboltable/CMakeFiles/LinkedListTest.dir
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Scanner/CMakeFiles/OutputBufferTest.dir
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Parser/CMakeFiles/ParserLib.dir
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Parser/CMakeFiles/ParserTest.dir
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Scanner/CMakeFiles/ScannerLib.dir
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Scanner/CMakeFiles/ScannerTest.dir
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Symboltable/CMakeFiles/StringTabTest.dir
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Symboltable/CMakeFiles/SymboltableLib.dir
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Symboltable/CMakeFiles/SymboltableTest.dir
+/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/build/Token/CMakeFiles/TokenLib.dir

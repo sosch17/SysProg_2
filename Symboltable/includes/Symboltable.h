@@ -17,8 +17,8 @@ public:
 	Symboltable();
 	virtual ~Symboltable();
 	void initSymbols();
-	Node<SymTabEntry>* insert(char* lexem, int size, char* type = "Identifier");
-	Node<SymTabEntry>* lookup(char* lexem);
+	SymTabEntry* insert(char* lexem, int size, char* type = "Identifier");
+	SymTabEntry* lookup(char* lexem);
 	unsigned long hash(char* lexem);
 
 private:
