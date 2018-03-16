@@ -1,24 +1,40 @@
 #include "../includes/MakeCode.h"
 
-MakeCode::MakeCode(){
-	this->code.open("/home/leonie/Downloads/SysProg_2/out.txt");
+MakeCode::MakeCode(ParseTree* tree){
+	ofstream code("/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/out.txt");
+	if ( !code.is_open())
+	    {
+	        cerr << "error opening file";
+	    }
+	this->code << "Start";
 	this->labelcnt = 0;
+	this->tree = tree;
+	this->progMC(this->tree->getRoot());
 }
 
 void MakeCode::progMC(TreeNode* node) {
-	if(node->getChildren()->getHead()->getData() != NULL) {
-			TreeNode* c1 = (TreeNode*) node->getChildren()->getHead()->getData();
-			if (c1->getNodeType() != EPSILON) {
-				this->declsMC(c1);
-			}
-			if(node->getChildren()->getHead()->getNext()->getData() != NULL) {
-				TreeNode* c2 =
+//	if(node->getChildren()->getHead()->getData() != NULL) {
+//			TreeNode* c1 = (TreeNode*) node->getChildren()->getHead()->getData();
+//			if (c1->getNodeType() != EPSILON) {
+//				this->declsMC(c1);
+//			}
+//			if(node->getChildren()->getHead()->getNext()->getData() != NULL) {
+//				TreeNode* c2 =
+//						(TreeNode*) node->getChildren()->getHead()->getNext()->getData();
+//				if(c2->getNodeType() != EPSILON) {
+//					this->statementsMC(c2);
+//				}
+//			}
+//		}
+	cout << "progMC" << endl;
+
+		TreeNode* c1 = (TreeNode*) node->getChildren()->getHead()->getData();
+		TreeNode* c2 =
 						(TreeNode*) node->getChildren()->getHead()->getNext()->getData();
-				if(c2->getNodeType() != EPSILON) {
-					this->statementsMC(c2);
-				}
-			}
-		}
+
+		this->declsMC(c1);
+		this->statementsMC(c2);
+
 
 	code << " STP ";
 	this->code.close();

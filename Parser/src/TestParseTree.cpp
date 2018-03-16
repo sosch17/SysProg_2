@@ -1,4 +1,5 @@
 #include "../includes/TypeCheck.h"
+#include "../includes/MakeCode.h"
 #include <iostream>
 
 using namespace std;
@@ -10,7 +11,7 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	Scanner* s = new Scanner("/home/leonie/Downloads/SysProg_2/Test.txt");
+	Scanner* s = new Scanner("/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/Test.txt");
 
 //	ofstream myfile("/home/leonie/Downloads/SysProg_2/out.txt");
 
@@ -24,6 +25,7 @@ int main(int argc, char **argv) {
 //	myfile.close();
 	ParseTree* parseTree = new ParseTree(s);
 	new TypeCheck(parseTree);
+	new MakeCode(parseTree);
 // hier typecheck von tree machen
 
 	return EXIT_SUCCESS;

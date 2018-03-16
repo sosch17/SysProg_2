@@ -6,6 +6,7 @@
 
 TypeCheck::TypeCheck(ParseTree* tree) {
 	this->tree = tree;
+	this->hasError = false;
 	this->root = tree->getRoot();
 	this->progTC(this->root);
 }
@@ -28,7 +29,15 @@ Types TypeCheck::progTC(TreeNode* node) {
 	this->statementsTC(c2);
 
 	node->setTypes(noType);
-	return noType;
+
+//	return noType;
+//	wenns fehler gab ende des programms und nicht compilieren
+	cout << this->hasError << endl;
+	if(this->hasError == true) {
+		cout << 'blubb' << endl;
+		exit(-1);
+	}
+
 }
 
 Types TypeCheck::declsTC(TreeNode* node) {
@@ -62,6 +71,7 @@ Types TypeCheck::declTC(TreeNode* node) {
 		cout << "identifier already defined. Error in Line - "
 				<< c3->getToken()->getLine() << "  Column - "
 				<< c3->getToken()->getColumn() << endl;
+		this->hasError = true;
 		node->setTypes(errorType);
 		return errorType;
 	} else if (arrayResultType == arrayType) {
@@ -92,6 +102,7 @@ Types TypeCheck::arrayTC(TreeNode* node) {
 			} else {
 				cout << "No valid dimensions." << c2->getToken()->getLine()
 						<< "  Column - " << c2->getToken()->getColumn() << endl;
+				this->hasError = true;
 				node->setTypes(errorType);
 				return errorType;
 			}
@@ -155,8 +166,9 @@ Types TypeCheck::statementTC(TreeNode* node) {
 
 	if (c1->getToken()->getKey()->getType() != "intArrayType"
 			&& c1->getToken()->getKey()->getType() != "intType") {
-		cout << "Statement TC Identifier not defined." << c1->getToken()->getLine()
+		cout << "Statement TC Identifier not defined. In Line - " << c1->getToken()->getLine()
 				<< "  Column - " << c1->getToken()->getColumn() << endl;
+		this->hasError = true;
 		node->setTypes(errorType);
 		return errorType;
 	} else if (expResultType == intType
@@ -167,9 +179,10 @@ Types TypeCheck::statementTC(TreeNode* node) {
 		node->setTypes(noType);
 		return noType;
 	} else {
-		cout << "Incompatible types." << c1->getToken()->getLine()
+		cout << "Incompatible types. In Line - " << c1->getToken()->getLine()
 				<< "  Column - " << c1->getToken()->getColumn() << endl;
 		node->setTypes(errorType);
+		this->hasError = true;
 		return errorType;
 	}
 
@@ -194,8 +207,9 @@ Types TypeCheck::statementTC3(TreeNode* node) {
 
 	if (c3->getToken()->getKey()->getType() != "intArrayType"
 			&& c3->getToken()->getKey()->getType() != "intType") {
-		cout << " StatementsTC3 Identifier not defined." << c3->getToken()->getLine()
+		cout << " StatementsTC3 Identifier not defined. In Line - " << c3->getToken()->getLine()
 				<< "  Column - " << c3->getToken()->getColumn() << endl;
+		this->hasError = true;
 		node->setTypes(errorType);
 		return errorType;
 	} else if ((c3->getToken()->getKey()->getType() == "intType"
@@ -205,8 +219,9 @@ Types TypeCheck::statementTC3(TreeNode* node) {
 		node->setTypes(noType);
 		return noType;  //return?
 	} else {
-		cout << "Incompatible types." << c3->getToken()->getLine()
+		cout << "Incompatible types. In Line - " << c3->getToken()->getLine()
 				<< "  Column - " << c3->getToken()->getColumn() << endl;
+		this->hasError = true;
 		node->setTypes(errorType);
 		return errorType;
 	}
@@ -414,25 +429,36 @@ Types TypeCheck::exp2TC(TreeNode* node) {
 Types TypeCheck::exp2TC2(TreeNode* node) {
 	cout << "exp2TC2" << endl;
 	LeafNode* c1 = (LeafNode*) node->getChildren()->getHead()->getData();
-	TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
-
-	this->indexTC(c2);
-	Types indexResultType = c2->getTypes();
+//	kann ja auch keinen index haben
+	Types indexResultType = noType;
+	if(node->getChildren()->getHead()->getNext() != NULL) {
+		TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
+			this->indexTC(c2);
+			indexResultType = c2->getTypes();
+	}
 
 	if (c1->getToken()->getKey()->getType() != "intArrayType"
 			&& c1->getToken()->getKey()->getType() != "intType") {
-		cout << "EXP2TC2 Identifier not defined." << c1->getToken()->getLine()
+		cout << "EXP2TC2 Identifier not defined. In Line - " << c1->getToken()->getLine()
 				<< "  Column - " << c1->getToken()->getColumn() << endl;
+		this->hasError = true;
 		node->setTypes(errorType);
 		return errorType;
 	} else if(c1->getToken()->getKey()->getType() == "intType" && indexResultType == noType) {
 		node->setTypes(intType);
 		return intType;
 	} else if(c1->getToken()->getKey()->getType() == "intArrayType" && indexResultType == arrayType) {
+//		intArrayType??
 		node->setTypes(intType);
-	} else {
-		cout << "No primitive type" << c1->getToken()->getLine()
+	} else if(c1->getToken()->getKey()->getType() == "intArrayType" && indexResultType == noType) {
+		cout << "EXP2TC2 Index Missing. In Line - " << c1->getToken()->getLine()
 						<< "  Column - " << c1->getToken()->getColumn() << endl;
+		this->hasError = true;
+				node->setTypes(errorType);
+	} else {
+		cout << "No primitive type. In Line - " << c1->getToken()->getLine()
+						<< "  Column - " << c1->getToken()->getColumn() << endl;
+		this->hasError = true;
 				node->setTypes(errorType);
 				return errorType;
 	}

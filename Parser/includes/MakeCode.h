@@ -15,9 +15,10 @@ class MakeCode {
 private:
 	ofstream code;
 	int labelcnt;
+	ParseTree* tree;
 
 public:
-	MakeCode();
+	MakeCode(ParseTree* tree);
 
 	void progMC(TreeNode* node);
 	void declsMC(TreeNode* node);

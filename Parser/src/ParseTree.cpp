@@ -521,9 +521,9 @@ void ParseTree::exp2(TreeNode* parent){
 		if(isReachableTerminal(this->currentToken, INDEX)){
 			this->index(node);
 		}
-		else{
-			this->error();
-		}
+//		else{
+//			this->error();
+//		}
 
 	}
 	else if(this->currentToken->getName() == StateTypes::integerState){

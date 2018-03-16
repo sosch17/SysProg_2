@@ -19,10 +19,10 @@ public:
 	TypeCheck(ParseTree* tree);
 	//BasicNode* getCurrentNode();
 private:
-
 	ParseTree* tree;
 	BasicNode* currentNode;
 	TreeNode* root;
+	bool hasError;
 	Types progTC(TreeNode* node);
 	Types declsTC(TreeNode* node);
 	//Types declsTC2(TreeNode* node);
