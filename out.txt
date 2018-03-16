@@ -1,5 +1,16 @@
-DS $a1
-LC 4
+DS $a 1
+LC 10
 LA $a
 STR 
+LA $a
+LV 
+LC 0
+LC 5
+SUB 
+SUB
+LA $a
+STR 
+LA $a
+LV 
+PRI 
 STP 

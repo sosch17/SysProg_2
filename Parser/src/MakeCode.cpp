@@ -21,7 +21,6 @@ void MakeCode::progMC(TreeNode* node) {
 		this->declsMC(c1);
 		this->statementsMC(c2);
 
-
 		(*this->code) << "STP "<< flush;
 
 }
@@ -43,7 +42,7 @@ void MakeCode::declMC(TreeNode* node) {
 	LeafNode* c3 =
 			(LeafNode*) node->getChildren()->getHead()->getNext()->getNext()->getData();
 
-	(*this->code) << "DS "<< "$"<< c3->getToken()->getContent() << flush;
+	(*this->code) << "DS "<< "$"<< c3->getToken()->getContent() << " " << flush;
 	this->arrayMC(c2);
 
 }
@@ -139,7 +138,7 @@ void MakeCode::statementMC5(TreeNode* node) {
 			(TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getNext()->getNext()->getNext()->getNext()->getData();
 
 	this->expMC(c3);
-	(*this->code) << "JIN "<< "#"<< label << flush << endl; // label1 ist neu
+	(*this->code) << "JIN "<< "#" << "label" << label << " " << flush << endl; // label1 ist neu
 	switch (c5->getNodeType()) {
 	case STATEMENT:
 		this->statementMC(c5);
@@ -160,8 +159,8 @@ void MakeCode::statementMC5(TreeNode* node) {
 		this->statementMC6(c5);
 		break;
 	}
-	(*this->code) << "JMP "<< "#"<< label2 << flush << endl; // label2 ist neu
-	(*this->code) << "#"<< label << "NOP "<< flush << endl;
+	(*this->code) << "JMP "<< "#" << "label" << label2 << " " << flush << endl; // label2 ist neu
+	(*this->code) << "#" << "label" << label << " "<< "NOP "<< flush << endl;
 	switch (c7->getNodeType()) {
 	case STATEMENT:
 		this->statementMC(c7);
@@ -182,7 +181,7 @@ void MakeCode::statementMC5(TreeNode* node) {
 		this->statementMC6(c7);
 		break;
 	}
-	(*this->code) << "#"<< label2 << "NOP "<< flush << endl;
+	(*this->code) << "#" << "label" << label2 << " " << "NOP "<< flush << endl;
 
 }
 void MakeCode::statementMC6(TreeNode* node) {
@@ -194,11 +193,11 @@ void MakeCode::statementMC6(TreeNode* node) {
 			(TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getData();
 	TreeNode* c5 =
 			(TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getNext()->getNext()->getData();
-	(*this->code) << "#"<< label << "NOP "<< flush << endl;
+	(*this->code) << "#"<< "label" << label << " " << "NOP "<< flush << endl;
 
 	this->expMC(c3);
 
-	(*this->code) << "JIN "<< "#"<< label2 << flush << endl;
+	(*this->code) << "JIN "<< "#" << "label" << label2 << " " << flush << endl;
 
 	switch (c5->getNodeType()) {
 	case STATEMENT:
@@ -221,8 +220,8 @@ void MakeCode::statementMC6(TreeNode* node) {
 		break;
 	}
 
-	(*this->code) << "JMP "<< "#"<< label << flush << endl;
-	(*this->code) << "#"<< label2 << "NOP "<< flush << endl;
+	(*this->code) << "JMP "<< "#"<< "label" << label << " " << flush << endl;
+	(*this->code) << "#"<< "label" << label2 << " " << "NOP "<< flush << endl;
 
 }
 void MakeCode::expMC(TreeNode* node) {

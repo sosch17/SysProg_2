@@ -1,3 +1,84 @@
-- array länge speichern und vergleichen für out of bounds exception
-	globale variable speichert immer wert und wenn man zurück zu store kommt setzt man die dimention auf diesen wert -> sollte man testen
-- interpreter
+int [3] a;
+int [2] b;
+int d;
+int c;
+
+a[1] := 5;
+b[1] := 9;
+
+d := 4;
+c := 7;
+
+while(d < c) { write(d); d := d + 1; };
+
+write(a[1] + b[1]);
+
+SYS:\> out.txt loaded...
+> 4
+> 5
+> 6
+> 14
+> finished ...
+
+int [3] a;
+int [2] b;
+int d;
+int c;
+
+a[1] := 5;
+b[1] := 9;
+
+d := 4;
+c := 7;
+
+if(c > d) a[2] := 2 else a[2] := -1;
+write(a[2]);
+
+SYS:\> out.txt loaded...
+> 2
+> finished ...
+
+int [3] a;
+int [2] b;
+int d;
+int c;
+
+a[1] := 5;
+b[1] := 9;
+
+d := 4;
+c := 7;
+
+if(c > d) { if(c < d) a[2] := 1 else a[2] := -1; } else a[2] := 4;
+
+
+write(a[2]);
+
+read(a[2]);
+
+write(a[2]);
+
+SYS:\> out.txt loaded...
+> -1
+<< 222222
+> 222222
+> finished ...
+
+int [3] a;
+int [2] b;
+int d;
+int c;
+
+a[1] := 5;
+b[1] := 9;
+
+d := 4;
+c := 7;
+
+
+if((c = 7) && (d = 4)) a[1] := 12 else a[1] := 0;
+write( a[1]);
+
+SYS:\> out.txt loaded...
+> 12
+> finished ...
