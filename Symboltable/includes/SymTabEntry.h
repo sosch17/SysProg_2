@@ -17,10 +17,13 @@ public:
 	char* getType();
 	bool compareLexem(char* lexem);
 	void setType(char* type);
+	int getDimention();
+	void setDimention(int d);
 
 private:
 	char* name;
 	char* type;
+	int dimention;
 
 };
 

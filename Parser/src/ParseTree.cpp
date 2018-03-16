@@ -41,8 +41,9 @@ ParseTree::ParseTree(Scanner* scanner) {
     this->currentToken = scanner->getNextToken();
     this->root = new TreeNode();
 
-    cout << "Start" << endl;
+    cout << "Building Tree..." << endl;
     this->prog(this->root);
+    cout << "Building Finished" << endl;
 
 }
 
@@ -60,19 +61,20 @@ LeafNode::LeafNode(TreeNode* parent, StateTypes::State terminal, Token* token) {
 
 // muss noch nachvollziehbar werden welcher knoten welche kinder hat???
 LeafNode* ParseTree::addLeaf(TreeNode* parent, StateTypes::State terminal, Token* token) {
-//	cout << "addLeaf: " << token->getName() << ", " << terminal << endl;
-
+	cout << "addLeaf: " << token->getName() << endl;
+	if(this->currentToken->getContent() == '\0') {
+		cout << 'ENDE' << endl;
+		this->currentToken = NULL;
+	}
 	LeafNode* leafNode = new LeafNode(parent, terminal, token);
 	if(parent->getChildren()->isEmpty()) {
 		parent->getChildren()->initNode(leafNode);
 	} else {
 		parent->getChildren()->addNode(leafNode);
 	}
-//	Fehlerbehandlung muss noch ausgearbeitet werden!!
 
 	this->currentToken = scanner->getNextToken();
 	return leafNode;
-	 //hier dann nächsten Token holen???
 }
 
 StateTypes::State LeafNode::getTerminal() {

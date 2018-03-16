@@ -1,0 +1,3 @@
+- array länge speichern und vergleichen für out of bounds exception
+	globale variable speichert immer wert und wenn man zurück zu store kommt setzt man die dimention auf diesen wert -> sollte man testen
+- interpreter

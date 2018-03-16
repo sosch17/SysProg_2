@@ -16,6 +16,7 @@ using namespace std;
 SymTabEntry::SymTabEntry(char* myName, char* myType){
 	name = myName;
 	type = myType;
+	this->dimention = 1;
 }
 
 /*
@@ -47,6 +48,22 @@ char* SymTabEntry::getType() {
 void SymTabEntry::setType(char* type) {
 	this->type = type;
 }
+
+/*
+ * Gibt Typ des Eintrags zurück.
+ * Return: char* type
+ */
+int SymTabEntry::getDimention() {
+	return this->dimention;
+}
+
+/*
+ * Setzt Typ des Eintrags.
+ */
+void SymTabEntry::setDimention(int d) {
+	this->type = type;
+}
+
 
 
 /*

@@ -5,6 +5,7 @@
 #include "../includes/TypeCheck.h"
 
 TypeCheck::TypeCheck(ParseTree* tree) {
+	cout << "type checking..." << endl;
 	this->tree = tree;
 	this->hasError = false;
 	this->root = tree->getRoot();
@@ -33,10 +34,10 @@ Types TypeCheck::progTC(TreeNode* node) {
 //	return noType;
 //	wenns fehler gab ende des programms und nicht compilieren
 	cout << this->hasError << endl;
-	if(this->hasError == true) {
-		cout << 'blubb' << endl;
-		exit(-1);
-	}
+//	if(this->hasError == true) {
+//		cout << 'blubb' << endl;
+//		exit(-1);
+//	}
 
 }
 

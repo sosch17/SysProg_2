@@ -138,7 +138,7 @@ Token* Scanner::createToken(StateTypes::State state, int line, int column) {
 			token = new Token(state, tokenChar, line, column);
 			return token;
 		} else {
-			return NULL;
+			return new Token(StateTypes::kommentarEndeState, '\0', line, column);
 		}
 
 	}

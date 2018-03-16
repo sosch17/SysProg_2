@@ -1,0 +1,5 @@
+DS $a1
+LC 4
+LA $a
+STR 
+STP 

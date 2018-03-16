@@ -1,32 +1,18 @@
 #include "../includes/MakeCode.h"
 
-MakeCode::MakeCode(ParseTree* tree){
-	ofstream code("/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/out.txt");
-	if ( !code.is_open())
+MakeCode::MakeCode(ParseTree* tree, ofstream* file){
+	this->code = file;
+	if ( !(*this->code).is_open())
 	    {
 	        cerr << "error opening file";
 	    }
-	this->code << "Start";
 	this->labelcnt = 0;
 	this->tree = tree;
 	this->progMC(this->tree->getRoot());
+	(*this->code).close();
 }
 
 void MakeCode::progMC(TreeNode* node) {
-//	if(node->getChildren()->getHead()->getData() != NULL) {
-//			TreeNode* c1 = (TreeNode*) node->getChildren()->getHead()->getData();
-//			if (c1->getNodeType() != EPSILON) {
-//				this->declsMC(c1);
-//			}
-//			if(node->getChildren()->getHead()->getNext()->getData() != NULL) {
-//				TreeNode* c2 =
-//						(TreeNode*) node->getChildren()->getHead()->getNext()->getData();
-//				if(c2->getNodeType() != EPSILON) {
-//					this->statementsMC(c2);
-//				}
-//			}
-//		}
-	cout << "progMC" << endl;
 
 		TreeNode* c1 = (TreeNode*) node->getChildren()->getHead()->getData();
 		TreeNode* c2 =
@@ -36,27 +22,28 @@ void MakeCode::progMC(TreeNode* node) {
 		this->statementsMC(c2);
 
 
-	code << " STP ";
-	this->code.close();
+		(*this->code) << "STP "<< flush;
 
 }
+
 void MakeCode::declsMC(TreeNode* node) {
 	TreeNode* c1 = (TreeNode*) node->getChildren()->getHead()->getData();
-	TreeNode* c3 =
-			(TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getData();
 
 	if(c1->getNodeType() != EPSILON) {
+		TreeNode* c3 =
+						(TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getData();
 		this->declMC(c1);
 		this->declsMC(c3);
 	}
 }
+
 void MakeCode::declMC(TreeNode* node) {
 	TreeNode* c2 =
 			(TreeNode*) node->getChildren()->getHead()->getNext()->getData();
 	LeafNode* c3 =
 			(LeafNode*) node->getChildren()->getHead()->getNext()->getNext()->getData();
 
-	code << " DS " << "$" << c3->getToken()->getContent();
+	(*this->code) << "DS "<< "$"<< c3->getToken()->getContent() << flush;
 	this->arrayMC(c2);
 
 }
@@ -65,19 +52,17 @@ void MakeCode::arrayMC(TreeNode* node) {
 	if(c1->isLeaf())
 	{
 		LeafNode* c2 = (LeafNode*) node->getChildren()->getHead()->getNext()->getData();
-		code << c2->getToken()->getContentInt();
+		(*this->code) << ""<< c2->getToken()->getContentInt() << flush << endl;
 	}
 	else{
-		code << 1;
+		(*this->code) << ""<< 1 << flush << endl;
 	}
 
 }
 void MakeCode::statementsMC(TreeNode* node) {
 	TreeNode* c1 = (TreeNode*) node->getChildren()->getHead()->getData();
 
-		if(c1->getNodeType() == EPSILON) {
-			code << " NOP ";
-		} else {
+		if(c1->getNodeType() != EPSILON) {
 			TreeNode* c3 = (TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getData();
 
 			switch (c1->getNodeType()) {
@@ -111,15 +96,15 @@ void MakeCode::statementMC(TreeNode* node) {
 		TreeNode* c4 =
 				(TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getNext()->getData();
 	this->expMC(c4);
-	code << " LA " << "$" << c1->getToken()->getContent();
+	(*this->code) << "LA "<< "$"<< c1->getToken()->getContent() << flush << endl;
 	this->indexMC(c2);
-	code << " STR ";
+	(*this->code) << "STR "<< flush << endl;
 
 }
 void MakeCode::statementMC2(TreeNode* node) {
 	TreeNode* c3 = (TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getData();
 	this->expMC(c3);
-	code << " PRI ";
+	(*this->code) << "PRI "<< flush << endl;
 
 }
 void MakeCode::statementMC3(TreeNode* node) {
@@ -128,10 +113,10 @@ void MakeCode::statementMC3(TreeNode* node) {
 	TreeNode* c4 =
 				(TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getNext()->getData();
 
-	code << " REA ";
-	code << " LA " << "$" << c3->getToken()->getContent();
+	(*this->code) << "REA "<< flush << endl;
+	(*this->code) << "LA "<< "$"<< c3->getToken()->getContent() << flush << endl;
 	this->indexMC(c4);
-	code << " STR ";
+	(*this->code) << "STR "<< flush << endl;
 
 }
 void MakeCode::statementMC4(TreeNode* node) {
@@ -154,7 +139,7 @@ void MakeCode::statementMC5(TreeNode* node) {
 			(TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getNext()->getNext()->getNext()->getNext()->getData();
 
 	this->expMC(c3);
-	code << " JIN " << "#" << label; // label1 ist neu
+	(*this->code) << "JIN "<< "#"<< label << flush << endl; // label1 ist neu
 	switch (c5->getNodeType()) {
 	case STATEMENT:
 		this->statementMC(c5);
@@ -175,8 +160,8 @@ void MakeCode::statementMC5(TreeNode* node) {
 		this->statementMC6(c5);
 		break;
 	}
-	code << " JMP " << "#" << label2; // label2 ist neu
-	code << "#" << label << " NOP ";
+	(*this->code) << "JMP "<< "#"<< label2 << flush << endl; // label2 ist neu
+	(*this->code) << "#"<< label << "NOP "<< flush << endl;
 	switch (c7->getNodeType()) {
 	case STATEMENT:
 		this->statementMC(c7);
@@ -197,7 +182,7 @@ void MakeCode::statementMC5(TreeNode* node) {
 		this->statementMC6(c7);
 		break;
 	}
-	code << "#" << label2 << " NOP ";
+	(*this->code) << "#"<< label2 << "NOP "<< flush << endl;
 
 }
 void MakeCode::statementMC6(TreeNode* node) {
@@ -209,11 +194,11 @@ void MakeCode::statementMC6(TreeNode* node) {
 			(TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getData();
 	TreeNode* c5 =
 			(TreeNode*) node->getChildren()->getHead()->getNext()->getNext()->getNext()->getNext()->getData();
-	code << "#" << label << " NOP ";
+	(*this->code) << "#"<< label << "NOP "<< flush << endl;
 
 	this->expMC(c3);
 
-	code << " JIN " << "#" << label2;
+	(*this->code) << "JIN "<< "#"<< label2 << flush << endl;
 
 	switch (c5->getNodeType()) {
 	case STATEMENT:
@@ -236,33 +221,15 @@ void MakeCode::statementMC6(TreeNode* node) {
 		break;
 	}
 
-	code << " JMP " << "#" << label;
-	code << "#" << label2 << " NOP ";
+	(*this->code) << "JMP "<< "#"<< label << flush << endl;
+	(*this->code) << "#"<< label2 << "NOP "<< flush << endl;
 
 }
 void MakeCode::expMC(TreeNode* node) {
 	TreeNode* c1 = (TreeNode*) node->getChildren()->getHead()->getData();
 	TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
 
-	if(c2->getTypes() == noType) {
-		switch (c1->getNodeType()) {
-			case EXP2:
-				this->exp2MC(c1);
-				break;
-			case EXP2_2:
-				this->exp2MC2(c1);
-				break;
-			case EXP2_3:
-				this->exp2MC3(c1);
-				break;
-			case EXP2_4:
-				this->exp2MC4(c1);
-				break;
-			case EXP2_5:
-				this->exp2MC5(c1);
-				break;
-			}
-	} else if(c2->getChildren()->getHead()->getData()->getTypes() == opGreater) {
+	if(c2->getChildren()->getHead()->getData()->getTypes() == opGreater) {
 		this->op_expMC(c2);
 		switch (c1->getNodeType()) {
 			case EXP2:
@@ -281,7 +248,7 @@ void MakeCode::expMC(TreeNode* node) {
 				this->exp2MC5(c1);
 				break;
 			}
-		code << "LES";
+		(*this->code) << "LES"<< flush << endl;
 	} else if(c2->getChildren()->getHead()->getData()->getTypes() == opUnequal) {
 
 		switch (c1->getNodeType()) {
@@ -302,7 +269,7 @@ void MakeCode::expMC(TreeNode* node) {
 				break;
 			}
 		this->op_expMC(c2);
-		code << "NOT";
+		(*this->code) << "NOT"<< flush << endl;
 	} else {
 		switch (c1->getNodeType()) {
 			case EXP2:
@@ -321,12 +288,12 @@ void MakeCode::expMC(TreeNode* node) {
 				this->exp2MC5(c1);
 				break;
 			}
-		this->op_expMC(c2);
+		if(c2->getTypes() != noType) {
+			this->op_expMC(c2);
+		}
 	}
 
-
-
-	this->op_expMC(c2);
+//	this->op_expMC(c2);
 
 }
 void MakeCode::exp2MC(TreeNode* node) {
@@ -336,18 +303,22 @@ void MakeCode::exp2MC(TreeNode* node) {
 }
 void MakeCode::exp2MC2(TreeNode* node) {
 	LeafNode* c1 = (LeafNode*) node->getChildren()->getHead()->getData();
-	TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
-	code << " LA " << "$" << c1->getToken()->getContent();
-	this->indexMC(c2);
-	code << " LV ";
+
+	(*this->code) << "LA "<< "$"<< c1->getToken()->getContent() << flush << endl;
+
+	if(node->getChildren()->getHead()->getNext() != NULL) {
+		TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
+		this->indexMC(c2);
+		}
+	(*this->code) << "LV "<< flush << endl;
 }
 void MakeCode::exp2MC3(TreeNode* node) {
 	LeafNode* c1 = (LeafNode*) node->getChildren()->getHead()->getData();
-	code << " LC " << c1->getToken()->getContentInt();
+	(*this->code) << "LC "<< c1->getToken()->getContentInt() << flush << endl;
 }
 void MakeCode::exp2MC4(TreeNode* node) {
 	TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
-	code << " LC " << 0;
+	(*this->code) << "LC "<< 0 << flush << endl;
 			switch (c2->getNodeType()) {
 				case EXP2:
 					this->exp2MC(c2);
@@ -365,7 +336,7 @@ void MakeCode::exp2MC4(TreeNode* node) {
 					this->exp2MC5(c2);
 					break;
 				}
-	code << " SUB ";
+	(*this->code) << "SUB "<< flush << endl;
 }
 void MakeCode::exp2MC5(TreeNode* node) {
 	TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
@@ -387,7 +358,7 @@ void MakeCode::exp2MC5(TreeNode* node) {
 				this->exp2MC5(c2);
 				break;
 			}
-		code << " NOT ";
+		(*this->code) << "NOT "<< flush << endl;
 }
 void MakeCode::indexMC(TreeNode* node) {
 	BasicNode* c1 = node->getChildren()->getHead()->getData();
@@ -396,7 +367,7 @@ void MakeCode::indexMC(TreeNode* node) {
 		TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
 
 		this->expMC(c2);
-		code << " ADD ";
+		(*this->code) << "ADD "<< flush << endl;
 	}
 
 
@@ -406,8 +377,9 @@ void MakeCode::op_expMC(TreeNode* node) {
 
 		if(c1->getNodeType() != EPSILON) {
 			TreeNode* c2 = (TreeNode*) node->getChildren()->getHead()->getNext()->getData();
-			this->opMC(c1);
 			this->expMC(c2);
+			this->opMC(c1);
+
 		}
 }
 void MakeCode::opMC(TreeNode* node) {
@@ -415,30 +387,30 @@ void MakeCode::opMC(TreeNode* node) {
 
 	switch (c1->getTerminal()) {
 		case StateTypes::plusState:
-			code << "ADD";
+			(*this->code) << "ADD"<< flush << endl;
 			break;
 		case StateTypes::minusState:
-			code << "SUB";
+			(*this->code) << "SUB"<< flush << endl;
 			break;
 		case StateTypes::sternState:
-			code << "MUL";
+			(*this->code) << "MUL"<< flush << endl;
 			break;
 		case StateTypes::doppelpunktState:
-			code << "DIV";
+			(*this->code) << "DIV"<< flush << endl;
 			break;
 		case StateTypes::kleinerState:
-			code << "LES";
+			(*this->code) << "LES"<< flush << endl;
 			break;
 		case StateTypes::groesserState:
 			break;
 		case StateTypes::gleichState:
-			code << "EQU";
+			(*this->code) << "EQU"<< flush << endl;
 			break;
 		case StateTypes::gleichDoppelpunktGleichState:
-			code << "EQU";
+			(*this->code) << "EQU"<< flush << endl;
 			break;
 		case StateTypes::undUndState:
-			code << "AND";
+			(*this->code) << "AND"<< flush << endl;
 			break;
 		}
 

@@ -25,7 +25,10 @@ int main(int argc, char **argv) {
 //	myfile.close();
 	ParseTree* parseTree = new ParseTree(s);
 	new TypeCheck(parseTree);
-	new MakeCode(parseTree);
+	ofstream code("/home/stud/lkt/fbi/brjo1022/workspace/SysProg_2/out.txt");
+
+	new MakeCode(parseTree, &code);
+
 // hier typecheck von tree machen
 
 	return EXIT_SUCCESS;

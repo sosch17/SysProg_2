@@ -13,12 +13,12 @@
 class MakeCode {
 
 private:
-	ofstream code;
+	ofstream* code;
 	int labelcnt;
 	ParseTree* tree;
 
 public:
-	MakeCode(ParseTree* tree);
+	MakeCode(ParseTree* tree, ofstream* file);
 
 	void progMC(TreeNode* node);
 	void declsMC(TreeNode* node);
