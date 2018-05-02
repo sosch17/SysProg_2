@@ -147,12 +147,20 @@ Token* Scanner::createToken(StateTypes::State state, int line, int column) {
 		key = symboltable->insert(tokenChar, wordSize);
 	}
 
-	token = new Token(state, tokenChar, line, column);
-	token->setKey(key);
-	resetTemporaryChars();
-	//WordSize fuer naechsten Token auf null setzen!
-	wordSize = 0;
-	return token;
+	//Für Kommentare soll kein Token erstellt werden (Kommentare ignorieren)
+	if(state == StateTypes::kommentarEndeState || state == StateTypes::kommentarStartState)
+	{
+		return getNextToken();
+	}
+	else{
+		token = new Token(state, tokenChar, line, column);
+		token->setKey(key);
+		resetTemporaryChars();
+		//WordSize fuer naechsten Token auf null setzen!
+		wordSize = 0;
+		return token;
+	}
+
 }
 
 //=================================================================================
